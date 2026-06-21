@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>GameHub - Gaming E-Store</title>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet"/>
+    <!-- Feather Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        /* ----- STYLE GUIDE ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5;
+            color: #1A1A2E;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            padding: 24px 32px 40px;
+        }
+
+        /* ----- NAVIGATION ----- */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1A1A2E;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            color: #E94560;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #1A1A2E;
+            transition: color 0.2s;
+            padding: 6px 0;
+        }
+        .nav-links a:hover {
+            color: #E94560;
+        }
+        .nav-links .active {
+            color: #E94560;
+            border-bottom: 3px solid #E94560;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .nav-icons i {
+            font-size: 22px;
+            color: #1A1A2E;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .nav-icons i:hover {
+            color: #E94560;
+        }
+
+        /* ----- SEARCH BAR ----- */
+        .search-section {
+            margin: 28px 0 32px;
+            display: flex;
+            justify-content: center;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #F5F5F5;
+            border-radius: 50px;
+            padding: 4px 4px 4px 20px;
+            width: 100%;
+            max-width: 600px;
+            border: 2px solid transparent;
+            transition: border 0.2s;
+        }
+        .search-bar:focus-within {
+            border-color: #E94560;
+            background: #ffffff;
+        }
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 14px 0;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            color: #1A1A2E;
+        }
+        .search-bar input::placeholder {
+            color: #999;
+        }
+        .search-bar button {
+            background: #E94560;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 28px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .search-bar button:hover {
+            background: #c7364f;
+        }
+
+        /* ----- SECTION TITLES ----- */
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title .badge {
+            font-size: 14px;
+            font-weight: 600;
+            background: #E94560;
+            color: #fff;
+            padding: 2px 14px;
+            border-radius: 30px;
+        }
+
+        /* ----- FEATURED PRODUCTS (scrollable) ----- */
+        .products-scroll {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            padding: 8px 4px 20px;
+            scrollbar-width: thin;
+        }
+        .products-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        .products-scroll::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+
+        .product-card {
+            flex: 0 0 220px;
+            background: #F9F9F9;
+            border-radius: 16px;
+            padding: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #eee;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+        .product-card .image {
+            height: 140px;
+            background: #e0e0e0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #888;
+            margin-bottom: 12px;
+        }
+        .product-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .product-card .rating {
+            color: #f5b342;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .product-card .price {
+            font-weight: 700;
+            font-size: 18px;
+            color: #1A1A2E;
+        }
+        .product-card .price small {
+            font-weight: 400;
+            font-size: 13px;
+            color: #888;
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+        .btn-add {
+            width: 100%;
+            margin-top: 12px;
+            background: #1A1A2E;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 0;
+            font-weight: 600;
+            font-size: 14px;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-add:hover {
+            background: #0F3460;
+        }
+        .btn-add.out-of-stock {
+            background: #bbb;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* ----- SALE BANNER ----- */
+        .sale-banner {
+            margin: 40px 0 32px;
+            background: linear-gradient(135deg, #1A1A2E 0%, #0F3460 100%);
+            border-radius: 20px;
+            padding: 32px 40px;
+            color: #fff;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .sale-banner .sale-text h2 {
+            font-size: 30px;
+            font-weight: 700;
+        }
+        .sale-banner .sale-text p {
+            font-size: 16px;
+            opacity: 0.85;
+            margin-top: 4px;
+        }
+        .sale-banner .timer {
+            display: flex;
+            gap: 16px;
+            font-weight: 700;
+            font-size: 26px;
+            background: rgba(255,255,255,0.12);
+            padding: 10px 24px;
+            border-radius: 50px;
+            backdrop-filter: blur(4px);
+        }
+        .sale-banner .timer span {
+            font-weight: 400;
+            font-size: 14px;
+            opacity: 0.7;
+            margin-left: 2px;
+        }
+        .btn-shop {
+            background: #E94560;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 40px;
+            font-weight: 700;
+            font-size: 18px;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-shop:hover {
+            background: #c7364f;
+        }
+
+        /* ----- TRUST BADGES (Footer) ----- */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid #eee;
+        }
+        .trust-badges .badge-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+        .trust-badges .badge-item i {
+            color: #E94560;
+            font-size: 24px;
+        }
+
+        /* ----- EDGE CASE: Empty state (hidden by default) ----- */
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            color: #888;
+        }
+        .empty-state i {
+            font-size: 56px;
+            color: #ddd;
+            margin-bottom: 12px;
+        }
+
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .navbar { flex-direction: column; gap: 12px; }
+            .nav-links { gap: 18px; flex-wrap: wrap; justify-content: center; }
+            .sale-banner { flex-direction: column; text-align: center; gap: 20px; }
+            .sale-banner .timer { font-size: 20px; padding: 8px 18px; }
+            .trust-badges { gap: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+        <div class="logo">Game<span>Hub</span></div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Sale</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="nav-icons">
+            <i data-feather="search"></i>
+            <i data-feather="shopping-cart"></i>
+        </div>
+    </nav>
+
+    <!-- ===== SEARCH BAR ===== -->
+    <div class="search-section">
+        <div class="search-bar">
+            <input type="text" placeholder="Search for gaming gear..." />
+            <button><i data-feather="search" style="width:18px;height:18px;"></i> Search</button>
+        </div>
+    </div>
+
+    <!-- ===== FEATURED PRODUCTS ===== -->
+    <div class="section-title">
+        ⭐ Featured Products
+        <span class="badge">New</span>
+    </div>
+    <div class="products-scroll">
+        <!-- Card 1 -->
+        <div class="product-card">
+            <div class="image">🎧</div>
+            <h4>Razer Kraken V3</h4>
+            <div class="rating">★★★★☆ 4.5</div>
+            <div class="price">₨ 14,999 <small>₨ 19,999</small></div>
+            <button class="btn-add">Add to Cart</button>
+        </div>
+        <!-- Card 2 -->
+        <div class="product-card">
+            <div class="image">🖱️</div>
+            <h4>Logitech G Pro</h4>
+            <div class="rating">★★★★★ 5.0</div>
+            <div class="price">₨ 11,499</div>
+            <button class="btn-add">Add to Cart</button>
+        </div>
+        <!-- Card 3 (Out of Stock - Edge Case) -->
+        <div class="product-card">
+            <div class="image">⌨️</div>
+            <h4>Keychron K8 Pro</h4>
+            <div class="rating">★★★★☆ 4.8</div>
+            <div class="price">₨ 18,999</div>
+            <button class="btn-add out-of-stock" disabled>Out of Stock</button>
+        </div>
+        <!-- Card 4 -->
+        <div class="product-card">
+            <div class="image">🖥️</div>
+            <h4>ASUS ROG Strix</h4>
+            <div class="rating">★★★★☆ 4.3</div>
+            <div class="price">₨ 89,999</div>
+            <button class="btn-add">Add to Cart</button>
+        </div>
+        <!-- Card 5 -->
+        <div class="product-card">
+            <div class="image">🎮</div>
+            <h4>Xbox Series X</h4>
+            <div class="rating">★★★★★ 4.9</div>
+            <div class="price">₨ 76,500</div>
+            <button class="btn-add">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- ===== SALE BANNER ===== -->
+    <div class="sale-banner">
+        <div class="sale-text">
+            <h2>🔥 Flash Sale – Up to 40% Off!</h2>
+            <p>Limited time deals on authentic gaming gear.</p>
+        </div>
+        <div class="timer">
+            <span>02 <span>d</span></span>
+            <span>14 <span>h</span></span>
+            <span>32 <span>m</span></span>
+            <span>18 <span>s</span></span>
+        </div>
+        <button class="btn-shop">Shop Now →</button>
+    </div>
+
+    <!-- ===== TRUST BADGES (Footer) ===== -->
+    <div class="trust-badges">
+        <div class="badge-item"><i data-feather="shield-check"></i> 100% Authentic</div>
+        <div class="badge-item"><i data-feather="truck"></i> Free Delivery</div>
+        <div class="badge-item"><i data-feather="lock"></i> Secure Payment</div>
+    </div>
+
+    <!-- ===== EDGE CASE: Empty Search (hidden, just for demo) ===== -->
+    <div class="empty-state" id="emptyState">
+        <i data-feather="frown"></i>
+        <h3>No products found.</h3>
+        <p>Try adjusting your filters or search for something else.</p>
+        <div style="display:flex; gap:12px; justify-content:center; margin-top:12px; flex-wrap:wrap;">
+            <span style="background:#eee; padding:6px 18px; border-radius:30px; font-size:14px;">Keyboard</span>
+            <span style="background:#eee; padding:6px 18px; border-radius:30px; font-size:14px;">Mouse</span>
+            <span style="background:#eee; padding:6px 18px; border-radius:30px; font-size:14px;">Headset</span>
+        </div>
+    </div>
+
+</div>
+
+<!-- Feather Icons Init -->
+<script>
+    feather.replace();
+</script>
+
+</body>
+</html>
