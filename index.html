@@ -77,6 +77,7 @@
             display: flex;
             gap: 20px;
             align-items: center;
+            position: relative;
         }
         .nav-icons i {
             font-size: 22px;
@@ -86,6 +87,28 @@
         }
         .nav-icons i:hover {
             color: #E94560;
+        }
+        
+        /* Cart Badge */
+        .cart-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        #cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: #E94560;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
         }
 
         /* ----- SEARCH BAR ----- */
@@ -242,6 +265,9 @@
             cursor: not-allowed;
             opacity: 0.7;
         }
+        .btn-add.out-of-stock:hover {
+            background: #bbb;
+        }
 
         /* ----- SALE BANNER ----- */
         .sale-banner {
@@ -318,7 +344,7 @@
             font-size: 24px;
         }
 
-        /* ----- EDGE CASE: Empty state (hidden by default) ----- */
+        /* ----- EMPTY STATE (for search) ----- */
         .empty-state {
             display: none;
             text-align: center;
@@ -357,15 +383,18 @@
         </ul>
         <div class="nav-icons">
             <i data-feather="search"></i>
-            <i data-feather="shopping-cart"></i>
+            <div class="cart-wrapper">
+                <i data-feather="shopping-cart"></i>
+                <span id="cart-count">0</span>
+            </div>
         </div>
     </nav>
 
     <!-- ===== SEARCH BAR ===== -->
     <div class="search-section">
         <div class="search-bar">
-            <input type="text" placeholder="Search for gaming gear..." />
-            <button><i data-feather="search" style="width:18px;height:18px;"></i> Search</button>
+            <input type="text" id="searchInput" placeholder="Search for gaming gear..." />
+            <button id="searchBtn"><i data-feather="search" style="width:18px;height:18px;"></i> Search</button>
         </div>
     </div>
 
@@ -374,46 +403,56 @@
         ⭐ Featured Products
         <span class="badge">New</span>
     </div>
-    <div class="products-scroll">
-        <!-- Card 1 -->
-        <div class="product-card">
-            <div class="image">🎧</div>
-            <h4>Razer Kraken V3</h4>
-            <div class="rating">★★★★☆ 4.5</div>
-            <div class="price">₨ 14,999 <small>₨ 19,999</small></div>
-            <button class="btn-add">Add to Cart</button>
+    
+    <!-- Products Wrapper for Search Filtering -->
+    <div id="productsWrapper">
+        <div class="products-scroll" id="productList">
+            <!-- Card 1 -->
+            <div class="product-card" data-name="Razer Kraken V3">
+                <div class="image">🎧</div>
+                <h4>Razer Kraken V3</h4>
+                <div class="rating">★★★★☆ 4.5</div>
+                <div class="price">₨ 14,999 <small>₨ 19,999</small></div>
+                <button class="btn-add">Add to Cart</button>
+            </div>
+            <!-- Card 2 -->
+            <div class="product-card" data-name="Logitech G Pro">
+                <div class="image">🖱️</div>
+                <h4>Logitech G Pro</h4>
+                <div class="rating">★★★★★ 5.0</div>
+                <div class="price">₨ 11,499</div>
+                <button class="btn-add">Add to Cart</button>
+            </div>
+            <!-- Card 3 (Out of Stock) -->
+            <div class="product-card" data-name="Keychron K8 Pro">
+                <div class="image">⌨️</div>
+                <h4>Keychron K8 Pro</h4>
+                <div class="rating">★★★★☆ 4.8</div>
+                <div class="price">₨ 18,999</div>
+                <button class="btn-add out-of-stock" disabled>Out of Stock</button>
+            </div>
+            <!-- Card 4 -->
+            <div class="product-card" data-name="ASUS ROG Strix">
+                <div class="image">🖥️</div>
+                <h4>ASUS ROG Strix</h4>
+                <div class="rating">★★★★☆ 4.3</div>
+                <div class="price">₨ 89,999</div>
+                <button class="btn-add">Add to Cart</button>
+            </div>
+            <!-- Card 5 -->
+            <div class="product-card" data-name="Xbox Series X">
+                <div class="image">🎮</div>
+                <h4>Xbox Series X</h4>
+                <div class="rating">★★★★★ 4.9</div>
+                <div class="price">₨ 76,500</div>
+                <button class="btn-add">Add to Cart</button>
+            </div>
         </div>
-        <!-- Card 2 -->
-        <div class="product-card">
-            <div class="image">🖱️</div>
-            <h4>Logitech G Pro</h4>
-            <div class="rating">★★★★★ 5.0</div>
-            <div class="price">₨ 11,499</div>
-            <button class="btn-add">Add to Cart</button>
-        </div>
-        <!-- Card 3 (Out of Stock - Edge Case) -->
-        <div class="product-card">
-            <div class="image">⌨️</div>
-            <h4>Keychron K8 Pro</h4>
-            <div class="rating">★★★★☆ 4.8</div>
-            <div class="price">₨ 18,999</div>
-            <button class="btn-add out-of-stock" disabled>Out of Stock</button>
-        </div>
-        <!-- Card 4 -->
-        <div class="product-card">
-            <div class="image">🖥️</div>
-            <h4>ASUS ROG Strix</h4>
-            <div class="rating">★★★★☆ 4.3</div>
-            <div class="price">₨ 89,999</div>
-            <button class="btn-add">Add to Cart</button>
-        </div>
-        <!-- Card 5 -->
-        <div class="product-card">
-            <div class="image">🎮</div>
-            <h4>Xbox Series X</h4>
-            <div class="rating">★★★★★ 4.9</div>
-            <div class="price">₨ 76,500</div>
-            <button class="btn-add">Add to Cart</button>
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState">
+            <i data-feather="frown"></i>
+            <h3>No products found.</h3>
+            <p>Try adjusting your search.</p>
         </div>
     </div>
 
@@ -423,11 +462,11 @@
             <h2>🔥 Flash Sale – Up to 40% Off!</h2>
             <p>Limited time deals on authentic gaming gear.</p>
         </div>
-        <div class="timer">
-            <span>02 <span>d</span></span>
-            <span>14 <span>h</span></span>
-            <span>32 <span>m</span></span>
-            <span>18 <span>s</span></span>
+        <div class="timer" id="countdownTimer">
+            <span id="days">00 <span>d</span></span>
+            <span id="hours">00 <span>h</span></span>
+            <span id="minutes">00 <span>m</span></span>
+            <span id="seconds">00 <span>s</span></span>
         </div>
         <button class="btn-shop">Shop Now →</button>
     </div>
@@ -439,23 +478,121 @@
         <div class="badge-item"><i data-feather="lock"></i> Secure Payment</div>
     </div>
 
-    <!-- ===== EDGE CASE: Empty Search (hidden, just for demo) ===== -->
-    <div class="empty-state" id="emptyState">
-        <i data-feather="frown"></i>
-        <h3>No products found.</h3>
-        <p>Try adjusting your filters or search for something else.</p>
-        <div style="display:flex; gap:12px; justify-content:center; margin-top:12px; flex-wrap:wrap;">
-            <span style="background:#eee; padding:6px 18px; border-radius:30px; font-size:14px;">Keyboard</span>
-            <span style="background:#eee; padding:6px 18px; border-radius:30px; font-size:14px;">Mouse</span>
-            <span style="background:#eee; padding:6px 18px; border-radius:30px; font-size:14px;">Headset</span>
-        </div>
-    </div>
-
 </div>
 
-<!-- Feather Icons Init -->
+<!-- Feather Icons & Main Script -->
 <script>
+    // Initialize Feather Icons
     feather.replace();
+
+    // ------------------------------------------------------------
+    // 1. COUNTDOWN TIMER (Real-time)
+    // ------------------------------------------------------------
+    // Set target date to 2 days from now (for demo)
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 2); // 2 days
+    targetDate.setHours(14, 0, 0, 0); // 2 PM
+
+    function updateTimer() {
+        const now = new Date().getTime();
+        const distance = targetDate.getTime() - now;
+
+        if (distance < 0) {
+            document.getElementById('days').innerHTML = '00 <span>d</span>';
+            document.getElementById('hours').innerHTML = '00 <span>h</span>';
+            document.getElementById('minutes').innerHTML = '00 <span>m</span>';
+            document.getElementById('seconds').innerHTML = '00 <span>s</span>';
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('days').innerHTML = String(days).padStart(2, '0') + ' <span>d</span>';
+        document.getElementById('hours').innerHTML = String(hours).padStart(2, '0') + ' <span>h</span>';
+        document.getElementById('minutes').innerHTML = String(minutes).padStart(2, '0') + ' <span>m</span>';
+        document.getElementById('seconds').innerHTML = String(seconds).padStart(2, '0') + ' <span>s</span>';
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
+    // ------------------------------------------------------------
+    // 2. SEARCH FUNCTIONALITY (Filter Products)
+    // ------------------------------------------------------------
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const productList = document.getElementById('productList');
+    const emptyState = document.getElementById('emptyState');
+    const productCards = document.querySelectorAll('.product-card');
+
+    function filterProducts() {
+        const query = searchInput.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        productCards.forEach(card => {
+            const name = card.getAttribute('data-name').toLowerCase();
+            if (name.includes(query) || query === '') {
+                card.style.display = 'block';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // Show/hide empty state
+        if (visibleCount === 0 && query !== '') {
+            emptyState.style.display = 'block';
+            // Hide scroll container's default padding if empty
+            productList.style.display = 'none';
+        } else {
+            emptyState.style.display = 'none';
+            productList.style.display = 'flex';
+        }
+    }
+
+    // Search on button click
+    searchBtn.addEventListener('click', filterProducts);
+    // Search on pressing "Enter" key
+    searchInput.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') {
+            filterProducts();
+        }
+    });
+    // Real-time search (optional: uncomment below for live filter)
+    // searchInput.addEventListener('input', filterProducts);
+
+    // ------------------------------------------------------------
+    // 3. ADD TO CART FUNCTIONALITY
+    // ------------------------------------------------------------
+    let cartCount = 0;
+    const cartCounter = document.getElementById('cart-count');
+
+    // Select all "Add to Cart" buttons except those with class 'out-of-stock'
+    const addButtons = document.querySelectorAll('.btn-add:not(.out-of-stock)');
+
+    addButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // Find the parent product card
+            const card = this.closest('.product-card');
+            const productName = card.getAttribute('data-name');
+            
+            // Increase cart count
+            cartCount++;
+            cartCounter.textContent = cartCount;
+
+            // Show alert with product name
+            alert(`🛒 "${productName}" added to your cart!`);
+        });
+    });
+
+    // Optional: Click on "Out of Stock" should just do nothing, but show a gentle alert if clicked? Already disabled.
+    // But we want to ensure it doesn't add count. Since we used :not(.out-of-stock), it's safe.
+
+    console.log('✅ GameHub is fully functional!');
 </script>
 
 </body>
